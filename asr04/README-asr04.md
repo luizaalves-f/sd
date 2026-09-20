@@ -1,6 +1,6 @@
 # ASR04
 
-Implementação da atividade ASR04 da disciplina de Sistemas Digitais.
+Implementação da atividade ASR04 da disciplina de Sistemas Distribuídos.
 
 A aplicação utiliza sockets TCP para comunicação entre cliente e servidor. O cliente pode solicitar diferentes operações, que são processadas pelo servidor.
 
