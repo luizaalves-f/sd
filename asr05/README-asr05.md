@@ -50,7 +50,7 @@ Crie e ative o ambiente virtual:
 
 ```bash
 python3 -m venv .venv
-source .venv/bin/activate
+.venv\Scripts\activate
 pip install python-dotenv
 ```
 

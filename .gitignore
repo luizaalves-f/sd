@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 
 asr05/.env
+asr06/ice-demo/.env
