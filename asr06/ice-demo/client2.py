@@ -34,4 +34,4 @@ print("String invertida:", rep)
 rep = printer2.contarCaracteres("Middleware Ice")
 print("Quantidade de caracteres:", rep)
 
-communicator.waitForShutdown()
+communicator.destroy()
