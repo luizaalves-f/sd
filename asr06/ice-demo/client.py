@@ -22,3 +22,5 @@ print("String invertida:", rep)
 
 rep = printer.contarCaracteres("Sistemas Distribuidos")
 print("Quantidade de caracteres:", rep)
+
+communicator.destroy()
