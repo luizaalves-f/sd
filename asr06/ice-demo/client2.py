@@ -9,8 +9,8 @@ HOST = os.getenv("IP_SERVIDOR")
  
 communicator = Ice.initialize(sys.argv)
 
-base1 = communicator.stringToProxy("SimplePrinter1:tcp -h {HOST} -p 5678")
-base2 = communicator.stringToProxy("SimplePrinter2:tcp -h {HOST} -p 5678")
+base1 = communicator.stringToProxy(f"SimplePrinter1:tcp -h {HOST} -p 5678")
+base2 = communicator.stringToProxy(f"SimplePrinter2:tcp -h {HOST} -p 5678")
 printer1 = Demo.PrinterPrx.checkedCast(base1)
 printer2 = Demo.PrinterPrx.checkedCast(base2)
 if (not printer1) or (not printer2):

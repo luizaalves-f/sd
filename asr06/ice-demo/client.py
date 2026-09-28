@@ -9,7 +9,7 @@ HOST = os.getenv("IP_SERVIDOR")
  
 communicator = Ice.initialize(sys.argv)
 
-base = communicator.stringToProxy("SimplePrinter:tcp -h {HOST} -p 5678")
+base = communicator.stringToProxy(f"SimplePrinter:tcp -h {HOST} -p 5678")
 printer = Demo.PrinterPrx.checkedCast(base)
 if not printer:
     raise RuntimeError("Invalid proxy")
