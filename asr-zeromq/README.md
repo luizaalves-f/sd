@@ -61,17 +61,28 @@ python3 client.py STOP
 
 ### Resultado
 
+Saída do cliente, com o servidor em outra instância:
+
 ```text
-Conectado a tcp://127.0.0.1:5678
+Conectado a tcp://172.31.87.73:5678
 ECHO Hello world 1 -> Hello world 1*
 UPPER sistemas distribuidos -> SISTEMAS DISTRIBUIDOS
 REVERSE Sistemas Distribuidos -> sodiubirtsiD sametsiS
 COUNT Sistemas Distribuidos -> 21
-TIME -> Sun Oct 11 11:50:30 2026
-STATS -> 6 requisicoes em 1s (COUNT=1, ECHO=1, REVERSE=1, STATS=1, TIME=1, UPPER=1)
+TIME -> Sun Oct 11 15:39:35 2026
+STATS -> 6 requisicoes em 7s (COUNT=1, ECHO=1, REVERSE=1, STATS=1, TIME=1, UPPER=1)
+Conectado a tcp://172.31.87.73:5679
+ECHO Hello world 2 -> Hello world 2*
+UPPER sistemas distribuidos -> SISTEMAS DISTRIBUIDOS
+REVERSE Sistemas Distribuidos -> sodiubirtsiD sametsiS
+COUNT Sistemas Distribuidos -> 21
+TIME -> Sun Oct 11 15:39:35 2026
+STATS -> 12 requisicoes em 7s (COUNT=2, ECHO=2, REVERSE=2, STATS=2, TIME=2, UPPER=2)
+Conectado a tcp://172.31.87.73:5678
+STOP -> Servidor encerrado
 ```
 
-Com o servidor desligado:
+Com o servidor desligado (teste feito localmente):
 
 ```text
 Conectado a tcp://127.0.0.1:5678
@@ -106,17 +117,26 @@ python3 subscriber.py TEMP ALERTA -n 10
 
 ### Resultado
 
+Saída do subscriber, com o publisher em outra instância:
+
 ```text
-Assinando TEMP, ALERTA em tcp://127.0.0.1:5678
-[TEMP #2] 28.3
-[TEMP #3] 27.3
-[TEMP #4] 26.4
-[TEMP #5] 26.6
-Recebidas: 4 | perdidas detectadas: 0
-  TEMP: última mensagem foi a #5
+Assinando TEMP, ALERTA em tcp://172.31.87.73:5678
+[TEMP #20] 28.7
+[TEMP #21] 28.7
+[TEMP #22] 28.3
+[TEMP #23] 28.3
+[TEMP #24] 28.0
+[TEMP #25] 28.7
+[TEMP #26] 29.9
+[TEMP #27] 30.2
+[ALERTA #7] temperatura alta: 30.2 C
+[TEMP #28] 29.4
+Recebidas: 10 | perdidas detectadas: 0
+  ALERTA: última mensagem foi a #7
+  TEMP: última mensagem foi a #28
 ```
 
-A primeira mensagem recebida é a #2 porque a #1 foi publicada antes de o subscriber se conectar.
+A primeira mensagem recebida é a #20 porque as anteriores foram publicadas antes de o subscriber se conectar.
 
 ## 3. Pipeline
 
@@ -132,27 +152,40 @@ A primeira mensagem recebida é a #2 porque a #1 foi publicada antes de o subscr
 python3 sink.py
 python3 taskwork.py w1
 python3 taskwork.py w2
-python3 tasksrc.py 1 10 0.2
-python3 tasksrc.py 2 10 0.2
+python3 tasksrc.py 1 20
+python3 tasksrc.py 2 20
 ```
 
 Os workers precisam ser iniciados antes das fontes.
 
 ### Resultado
 
-Saída do sink:
+Saída do sink (final), com 20 tarefas de cada fonte:
 
 ```text
-w1 concluiu tarefa 8 da fonte 2 (carga 83, primo) em 0.83s
-w1 concluiu tarefa 10 da fonte 2 (carga 65) em 0.65s
+w1 concluiu tarefa 15 da fonte 2 (carga 70) em 0.70s
+w2 concluiu tarefa 16 da fonte 2 (carga 62) em 0.62s
+w1 concluiu tarefa 17 da fonte 2 (carga 10) em 0.10s
+w2 concluiu tarefa 18 da fonte 2 (carga 63) em 0.63s
+w1 concluiu tarefa 19 da fonte 2 (carga 16) em 0.16s
+w2 concluiu tarefa 20 da fonte 2 (carga 95) em 0.95s
 
-===== Resumo: 20 tarefas concluidas =====
-  worker w1        12 tarefas ( 60.0%) | carga total  598 | 5.99s trabalhando
-  worker w2         8 tarefas ( 40.0%) | carga total  301 | 3.01s trabalhando
-  fonte 1: 10 tarefas
-  fonte 2: 10 tarefas
-  cargas primas encontradas: 8 [3, 11, 23, 29, 41, 71, 79, 83]
+===== Resumo: 40 tarefas concluidas =====
+  worker w1        25 tarefas ( 62.5%) | carga total 1420 | 14.20s trabalhando
+  worker w2        15 tarefas ( 37.5%) | carga total  914 | 9.14s trabalhando
+  fonte 1: 20 tarefas
+  fonte 2: 20 tarefas
+  cargas primas encontradas: 6 [3, 7, 37, 59, 73, 89]
 ```
 
-<!-- TODO: as saídas acima são do teste local. Depois de rodar nas instâncias EC2,
-     trocar pelas saídas da AWS e dizer aqui o que rodou em cada instância. -->
+Com os dois workers conectados, as tarefas de cada fonte são entregues alternadamente a eles.
+
+## Execução na AWS
+
+Os três exemplos foram executados em duas instâncias EC2 distintas, usando os IPs privados:
+
+| Exemplo           | Instância 1 (172.31.87.73)        | Instância 2 (172.31.81.247) |
+|-------------------|-----------------------------------|-----------------------------|
+| Request-reply     | servidor                          | cliente                     |
+| Publish-subscribe | publisher                         | subscriber                  |
+| Pipeline          | sink, worker `w1` e fonte 1       | worker `w2` e fonte 2       |
