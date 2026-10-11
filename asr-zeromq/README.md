@@ -32,7 +32,7 @@ export IP_SRC2=IP_PRIVADO
 export IP_SINK=IP_PRIVADO
 ```
 
-As portas usadas são 4567, 4568 e 4569.
+As portas usadas são 5678, 5679 e 5680.
 
 ## 1. Request-reply
 
@@ -62,7 +62,7 @@ python3 client.py STOP
 ### Resultado
 
 ```text
-Conectado a tcp://127.0.0.1:4567
+Conectado a tcp://127.0.0.1:5678
 ECHO Hello world 1 -> Hello world 1*
 UPPER sistemas distribuidos -> SISTEMAS DISTRIBUIDOS
 REVERSE Sistemas Distribuidos -> sodiubirtsiD sametsiS
@@ -74,7 +74,7 @@ STATS -> 6 requisicoes em 1s (COUNT=1, ECHO=1, REVERSE=1, STATS=1, TIME=1, UPPER
 Com o servidor desligado:
 
 ```text
-Conectado a tcp://127.0.0.1:4567
+Conectado a tcp://127.0.0.1:5678
   sem resposta (tentativa 1 de 3)
   sem resposta (tentativa 2 de 3)
   sem resposta (tentativa 3 de 3)
@@ -107,7 +107,7 @@ python3 subscriber.py TEMP ALERTA -n 10
 ### Resultado
 
 ```text
-Assinando TEMP, ALERTA em tcp://127.0.0.1:4567
+Assinando TEMP, ALERTA em tcp://127.0.0.1:5678
 [TEMP #2] 28.3
 [TEMP #3] 27.3
 [TEMP #4] 26.4

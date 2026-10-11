@@ -6,6 +6,6 @@ import os
 SRC1  = os.getenv("IP_SRC1", "127.0.0.1")
 SRC2  = os.getenv("IP_SRC2", "127.0.0.1")
 SINK  = os.getenv("IP_SINK", "127.0.0.1")
-PORT1 = "4567"   # task source 1
-PORT2 = "4568"   # task source 2
-PORT3 = "4569"   # sink
+PORT1 = "5678"   # task source 1
+PORT2 = "5679"   # task source 2
+PORT3 = "5680"   # sink
