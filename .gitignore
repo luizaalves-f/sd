@@ -4,3 +4,5 @@ __pycache__/
 
 asr05/.env
 asr06/ice-demo/.env
+hs_err_pid*.log
+replay_pid*.log
