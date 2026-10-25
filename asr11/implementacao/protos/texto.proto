@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package texto;
+
+service Texto {
+  rpc Inverter (TextoMsg) returns (TextoMsg) {}
+  rpc Maiusculas (TextoMsg) returns (TextoMsg) {}
+  rpc ContarCaracteres (TextoMsg) returns (ContagemMsg) {}
+}
+
+message TextoMsg {
+  string texto = 1;
+}
+
+message ContagemMsg {
+  int32 quantidade = 1;
+}
