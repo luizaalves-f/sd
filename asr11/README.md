@@ -24,6 +24,8 @@ Cada servidor faz `bind` ao iniciar (ou `rebind`, se o nome já existir) e `unbi
 
 ## Execução
 
+A partir da pasta `asr11`:
+
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
@@ -41,6 +43,12 @@ python3 servidor_nomes.py
 python3 servidor_calculadora.py
 python3 servidor_texto.py
 python3 cliente.py
+```
+
+Para testar só o serviço de nomes, incluindo os casos de erro, com o `servidor_nomes.py` rodando:
+
+```bash
+python3 teste_nomes.py
 ```
 
 ## Resultado
