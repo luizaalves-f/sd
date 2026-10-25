@@ -1,0 +1,22 @@
+syntax = "proto3";
+
+package calculadora;
+
+service Calculadora {
+  rpc Somar (OperandosMsg) returns (ResultadoMsg) {}
+  rpc Subtrair (OperandosMsg) returns (ResultadoMsg) {}
+  rpc Multiplicar (OperandosMsg) returns (ResultadoMsg) {}
+  rpc Dividir (OperandosMsg) returns (ResultadoMsg) {}
+}
+
+message OperandosMsg {
+  double a = 1;
+  double b = 2;
+}
+
+// status é "OK" ou "NOK" (por exemplo, divisão por zero)
+message ResultadoMsg {
+  string status = 1;
+  string mensagem = 2;
+  double valor = 3;
+}

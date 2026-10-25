@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package nomes;
+
+// Serviço de nomes: os servidores registram nome e endereço,
+// e os clientes consultam o endereço a partir do nome.
+service ServicoNomes {
+  rpc Bind (BindMsg) returns (StatusMsg) {}       // registra um nome novo
+  rpc Lookup (NomeMsg) returns (LookupMsg) {}     // consulta o endereço de um nome
+  rpc Unbind (NomeMsg) returns (StatusMsg) {}     // remove um nome
+  rpc Rebind (BindMsg) returns (StatusMsg) {}     // atualiza o endereço de um nome
+}
+
+message EnderecoMsg {
+  string ip = 1;
+  string porta = 2;
+}
+
+message BindMsg {
+  string nome = 1;
+  EnderecoMsg endereco = 2;
+}
+
+message NomeMsg {
+  string nome = 1;
+}
+
+// status é "OK" ou "NOK"; mensagem explica o motivo
+message StatusMsg {
+  string status = 1;
+  string mensagem = 2;
+}
+
+message LookupMsg {
+  string status = 1;
+  string mensagem = 2;
+  EnderecoMsg endereco = 3;
+}
