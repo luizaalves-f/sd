@@ -61,7 +61,7 @@ O gRPC tem mais **transparencia de acesso**: a chamada remota parece uma chamada
 
 Nenhum dos dois tem **transparencia de localizaçao**: o IP e a porta do servidor estao fixos no `const.py`. Um serviço de nomes, como o da ASR11, resolveria isso
 
-## Resumo
+## Resumo da comparaçao dos exemplos
 
 | Aspecto | RESTful | gRPC |
 |---|---|---|
@@ -112,3 +112,22 @@ Sobre a infraestrutura: como o gRPC mantem uma conexao HTTP/2 aberta por muito t
 ### Conclusao
 
 Nenhuma das duas tecnologias e melhor em todos os casos. O RESTful prioriza **abertura e simplicidade**, o que o torna adequado para APIs consumidas por navegadores e por terceiros. O gRPC prioriza **eficiencia e contrato rigido**, o que o torna adequado para a comunicaçao entre serviços de um mesmo sistema. A escolha depende principalmente de quem vai consumir a API e de quanto o desempenho importa
+
+## Como executar
+
+A partir da pasta `asr12`:
+
+```bash
+python3 -m venv .venv
+source .venv/bin/activate
+pip3 install -r medicao/requirements.txt
+```
+
+**Mediçao:** o script sobe os dois servidores do professor na propria maquina, sem alterar o codigo deles, e imprime as tabelas de tamanho e tempo. Leva cerca de um minuto
+
+```bash
+cd medicao
+python3 medicao.py
+```
+
+**Exemplos do professor:** seguem as instruçoes dos READMEs de cada pasta. Antes de executar o cliente, e preciso trocar o IP no `const.py` pelo endereço da maquina onde o servidor esta rodando
